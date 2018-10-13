@@ -245,9 +245,9 @@ data(package = "ggplot2")
 
 ```{r}
 # Visualiza la estructura de `mpg`
-
+str(mpg)
 # Accede a la página de ayuda del dataset
-
+?mpg
 ```
 
 Nos fijaremos en dos variables:
@@ -258,13 +258,14 @@ Utiliza `ggplot` para visualizar una variable frente a la otra en la siguiente c
 
 
 ```{r}
-# ggplot(...) + geom_point(...)
-
+ggplot(data=mpg) + geom_point(mapping=aes(x=displ,y=hwy))
+?geom_point
 ```
 
 ¿qué podemos decir de estas dos variables?
 ¿La relación entre ambas es negativa o positiva? ¿que conclusión sacamos?
-
+RESPUESTA
+Es negativa. Cuanto mayor sea el tamaño del motor del coche en litros, menor será la eficiencia de combustible por galón y, por tanto, el coche consumirá más combustible a medida cuanto mayor sea el tamaño del motor.
 ---
 
 Para **asociar un parámetro estético a una variable** añadimos el nombre de ese parámetro (o argumento) en `aes()`.
@@ -282,12 +283,13 @@ Los colores revelan que muchos de los puntos inusuales (rojo) son coches de dos 
 
 1) ¿Que tipo de variable es `class`? Elige una variable continua y crea un gráfico de la misma en función de las variables `displ` y `hwy` 
 ¿Cómo se comportan los estéticos para variables continuas en comparación a las categóricas?
-
-
+RESPUESTA
+La variable `class` es de tipo 'character'
+Se comportan los estéticos para variables continuas de manera similar que para variables catégoricas.
 
 ```{r}
-# ggplot ...
-
+?ggplot
+ggplot(data=mpg) + geom_point(mapping = aes(x = displ, y = hwy, color=cty))
 
 ```
 
@@ -295,15 +297,16 @@ Los colores revelan que muchos de los puntos inusuales (rojo) son coches de dos 
 
 
 ```{r}
-#ggplot(...
+ggplot(data=mpg) + geom_point(mapping = aes(x = displ, y = hwy, color = manufacturer, size=cty))
 ```
 
 3) ¿Qué ocurre cuando intentamos diferenciar los puntos por forma (`shape`) en base a una variable continua (e.g. `cty`)?
-
+RESPUESTA
+No hay suficientes formas en el paquete para plasmar todos los datos segun la forma
+Se borran 137 filas que contienen valores perdidos o no almacenados en la variable, valores desconocidos.
 
 ```{r}
-# ggplot...
-
+ggplot(data=mpg) + geom_point(mapping = aes(x = displ, y = hwy, color=class, shape=factor(cty)))
 
 ```
 
@@ -394,7 +397,22 @@ geom_point(aes(1:nrow(flights), bydelay$dep_delay), color = "red")
 
 
 ```{r}
-# arrange(...
+#1)
+vuel_sin_hora <- filter(flights, is.na(dep_time))
+#vuel_sin_hora
+#length(vuel_sin_hora$dep_time)
+#RESPUESTA
+#8255 vuelos sin hora de salida
+#2)
+distance_sorted <- arrange(flights, desc(distance))
+distance_sorted$distance
+vuelos_max_distance <- filter(distance_sorted, distance==max(distance))
+#length(vuelos_max_distance$flight)
+vuelos_min_distance <- filter(distance_sorted, distance==min(distance))
+#length(vuelos_min_distance$flight)
+#RESPUESTA
+#Los de mayor trayecto han sido aquellos vuelos que han recorrido 4963km que son 342 vuelos.
+#Los de menor trayecto han sido aquellos vuelos que han recorrido km que solo es 1  vuelo.
 ```
 
 ---
