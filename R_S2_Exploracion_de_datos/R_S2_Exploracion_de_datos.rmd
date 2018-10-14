@@ -577,13 +577,15 @@ Las principales ventajas de `read_csv` frente a `read.csv` (de base de R) son:
 ### Práctica 4
 
 ¿Qúe función de importación utilizarías para un archivo separado por "|" (e.g. "a|b|c\n1|2|3")? Escribe un ejemplo a continuación:
+RESPUESTA:
+read_tsv() porque es la función por defecto que separa por tabulaciones.
 
 Identifica qué está mal en los siguientes archivos CSV y corrígelo:
 
 
 ```{r}
-read_csv("a,b\n1,2,3\n4,5,6")
-read_csv("a;b\n1;3")
+read_csv("a,b,c\n1,2,3\n4,5,6")
+read_delim("a;b\n1;3", delim = ';')
 
 ```
 
@@ -601,7 +603,9 @@ Exporta el dataset `flights` al directorio que quieras (utiliza `?write_csv` com
 
 
 ```{r}
-# write_...
+?write_csv
+write_csv(flights, tempfile(), na = "NA", append = FALSE)
+
 ```
 
 ---
@@ -714,8 +718,9 @@ Utiliza el dataset `flights` y la función `unite()` para crear la variable `fec
 
 
 ```{r}
-# unite()..
-
+?unite
+fl <- unite(flights, 'date', c('year', 'month', 'day'), sep='/')
+fl
 ```
 
 ---
